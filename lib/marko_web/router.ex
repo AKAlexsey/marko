@@ -18,20 +18,16 @@ defmodule MarkoWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+
+    live_session :activity_tracking, layout: {MarkoWeb.Layouts, :pages_layout} do
+      live "/page_a", PageA
+      live "/page_b", PageB
+      live "/page_c", PageC
+      live "/page_c/:tab", PageC
+    end
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", MarkoWeb do
-  #   pipe_through :api
-  # end
-
-  # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:marko, :dev_routes) do
-    # If you want to use the LiveDashboard in production, you should put
-    # it behind authentication and allow only admins to access it.
-    # If your application does not have an admins-only section yet,
-    # you can use Plug.BasicAuth to set up some basic authentication
-    # as long as you are also using SSL (which you should anyway).
     import Phoenix.LiveDashboard.Router
 
     scope "/dev" do
