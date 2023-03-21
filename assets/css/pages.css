@@ -1,11 +1,11 @@
 #pages_layout {
-    max-width: 400px;
+    width: fit-content;
     margin-left: auto;
     margin-right: auto;
     margin-top: 20px;
     background-color: lightblue;
     border-radius: 3px;
-    padding: 10px;
+    padding: 10px 10px 10px 10px;
 }
 
 .page_header {
@@ -19,3 +19,59 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+.page_body {
+    padding-bottom: 5px;
+}
+
+.navigation_list {
+    padding: 5px 0;
+}
+
+.navigation_list .navigation_list_item {
+    min-width: 100px;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    font-size: 16px;
+    color: black;
+    background-color: white;
+    border-radius: 3px;
+    padding: 8px;
+    font-weight: 600;
+}
+
+.navigation_list .navigation_list_item:hover {
+    background-color: darkgray;
+    color: white;
+}
+
+.navigation_tabs .tabs_switch {
+    display: flex;
+}
+
+.navigation_tabs .tabs_switch .tab {
+    display: block;
+    font-size: 16px;
+    color: black;
+    border-radius: 3px;
+    padding: 8px;
+    font-weight: 600;
+}
+
+.navigation_tabs .tabs_switch .tab.active {
+    border-top: 3px darkblue solid;
+    border-left: 3px darkblue solid;
+    border-right: 3px darkblue solid;
+    border-bottom: 3px lightblue solid;
+    margin-bottom: -3px;
+    border-radius: 3px;
+}
+
+.navigation_tabs .tabs_content {
+    border: 3px darkblue solid;
+    border-radius: 3px;
+    padding-left: 6px;
+    padding-right: 6px;
+    border-radius: 3px;
+}
+
