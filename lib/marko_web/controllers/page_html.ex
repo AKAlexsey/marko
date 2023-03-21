@@ -1,5 +1,5 @@
-defmodule MarkoWeb.PageHTML do
+defmodule MarkoWeb.MonitoringHTML do
   use MarkoWeb, :html
 
-  embed_templates "page_html/*"
+  embed_templates "monitoring_html/*"
 end

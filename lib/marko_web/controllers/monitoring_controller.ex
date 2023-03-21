@@ -1,4 +1,4 @@
-defmodule MarkoWeb.PageController do
+defmodule MarkoWeb.MonitoringController do
   use MarkoWeb, :controller
 
   def home(conn, _params) do

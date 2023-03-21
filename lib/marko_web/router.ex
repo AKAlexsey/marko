@@ -10,16 +10,22 @@ defmodule MarkoWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :put_session_cookie do
+    plug(:fetch_cookies, signed: ~w(user_session))
+    plug(MarkoWeb.Plugs.PutSessionCookie)
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
 
   scope "/", MarkoWeb do
-    pipe_through :browser
+    pipe_through [:browser, :put_session_cookie]
 
-    get "/", PageController, :home
+    get "/", MonitoringController, :home
 
-    live_session :activity_tracking, layout: {MarkoWeb.Layouts, :pages_layout} do
+    live_session :activity_tracking,
+      layout: {MarkoWeb.Layouts, :pages_layout} do
       live "/page_a", PageA
       live "/page_b", PageB
       live "/page_c", PageC
