@@ -7,8 +7,8 @@ defmodule Marko.Monitoring.SessionTrackingWorker do
 
   alias Marko.Monitoring
 
-  def track_user_activity_activity(session_id, view, metadata \\ %{}) do
-    GenServer.cast({:track_user_activity_activity, {session_id, view, metadata}}, __MODULE__)
+  def track_user_activity(session_id, view, seconds_spent, metadata \\ %{}) do
+    GenServer.cast({:track_user_activity, {session_id, view, seconds_spent, metadata}}, __MODULE__)
   end
 
   def start_link(_) do
@@ -17,9 +17,9 @@ defmodule Marko.Monitoring.SessionTrackingWorker do
 
   def init(_), do: {:ok, %{}}
 
-  def handle_cast({:track_user_activity_activity, {session_id, view, metadata}}, state) do
-    IO.puts("!!! {:create_activity, #{inspect({session_id, view, metadata})}}")
-    # Monitoring.create_activity(%{session_id: session_id, view: view, metadata: metadata})
+  def handle_cast({:track_user_activity, {session_id, view, seconds_spent, metadata}}, state) do
+    IO.puts("!!! {:create_activity, #{inspect({session_id, view, seconds_spent, metadata})}}")
+    # Monitoring.create_activity(%{session_id: session_id, seconds_spent: seconds_spent, metadata: metadata, view: view})
 
     {:noreply, state}
   end

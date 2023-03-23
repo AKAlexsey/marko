@@ -27,7 +27,7 @@ defmodule MarkoWeb.Plugs.PutTrackingData do
   end
 
   defp put_user_agent(conn) do
-    user_agent = get_req_header(conn, @user_agent_header)
+    [user_agent] = get_req_header(conn, @user_agent_header)
 
     put_session(conn, :user_agent, user_agent)
   end
