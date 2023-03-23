@@ -17,7 +17,7 @@ defmodule Marko.Components.Navigation do
     ~H"""
     <div class="navigation_tabs">
       <div class="tabs_switch">
-        <%= Enum.map(@tabs_list, fn {tab, %{active: active, text: text, path: path}} -> %>
+        <%= Enum.map(@tabs_list, fn %{active: active, text: text, path: path} -> %>
           <div class={"tab #{if(active, do: "active")}"}>
             <.link navigate={path}><%= text %></.link>
           </div>

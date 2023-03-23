@@ -1,0 +1,29 @@
+<.header>
+  Listing Activities
+  <:actions>
+    <.link href={~p"/activities"}>
+      <.button>TODO activity</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table id="activities" rows={@activities} row_click={&JS.navigate(~p"/activities/#{&1}")}>
+  <:col :let={activity} label="View name"><%= activity.view %></:col>
+  <:col :let={activity} label="Session">
+    <%= activity.view %>
+    <.link href={~p"/sessions/#{activity.session_id}"}>
+      <%= activity.session.public_hash_id %>
+    </.link>
+  </:col>
+  <:col :let={activity} label="Metadata"><%= inspect(activity.metadata, pretty: true) %></:col>
+  <:action :let={activity}>
+    <div class="sr-only">
+      <.link navigate={~p"/activities/#{activity}"}>Show</.link>
+    </div>
+  </:action>
+  <:action :let={activity}>
+    <.link href={~p"/activities/#{activity}"} method="delete" data-confirm="Are you sure?">
+      Delete
+    </.link>
+  </:action>
+</.table>

@@ -21,7 +21,7 @@ defmodule MarkoWeb do
 
   def router do
     quote do
-      use Phoenix.Router, helpers: false
+      use Phoenix.Router, helpers: true
 
       # Import common connection and controller functions to use in pipelines
       import Plug.Conn
@@ -89,6 +89,9 @@ defmodule MarkoWeb do
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
+
+      # Router path helpers
+      import MarkoWeb.Router.Helpers
 
       # Routes generation with the ~p sigil
       unquote(verified_routes())

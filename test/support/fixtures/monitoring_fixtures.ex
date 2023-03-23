@@ -17,4 +17,21 @@ defmodule Marko.MonitoringFixtures do
 
     sessions
   end
+
+  @doc """
+  Generate a activity.
+  """
+  def activity_fixture(attrs \\ %{}) do
+    {:ok, activity} =
+      attrs
+      |> Enum.into(%{
+        metadata: %{},
+        view: "some view",
+        seconds_spent: 1
+      })
+      |> Map.update(:session_id, Map.get(sessions_fixture(), :id), fn session_id -> session_id end)
+      |> Marko.Monitoring.create_activity()
+
+    activity
+  end
 end

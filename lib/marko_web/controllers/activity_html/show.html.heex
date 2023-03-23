@@ -1,0 +1,11 @@
+<.header>
+  Activity <%= @activity.id %>
+  <:subtitle>This is a activity record from your database.</:subtitle>
+</.header>
+
+<.list>
+  <:item title="View"><%= @activity.view %></:item>
+  <:item title="Metadata"><%= @activity.metadata %></:item>
+</.list>
+
+<.back navigate={~p"/activities"}>Back to activities</.back>

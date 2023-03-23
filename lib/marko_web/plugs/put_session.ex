@@ -28,7 +28,7 @@ defmodule MarkoWeb.Plugs.PutSession do
     |> put_session(:session_id, session_id)
   end
 
-  defp get_session(%{cookies: cookies} = conn) do
+  defp get_session(%{cookies: cookies}) do
     with %{@session_cookie_name => %{id: public_hash_id}} <-
            Map.get(cookies, @session_cookie_name),
          %{} = session <- Monitoring.find_session_by_public_hash_id(public_hash_id) do

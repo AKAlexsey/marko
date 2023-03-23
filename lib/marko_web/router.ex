@@ -26,6 +26,7 @@ defmodule MarkoWeb.Router do
     get "/", MonitoringController, :home
 
     resources "/sessions", SessionController
+    resources "/activities", ActivityController, only: [:index, :show, :delete]
   end
 
   scope "/", MarkoWeb do

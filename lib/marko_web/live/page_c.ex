@@ -20,7 +20,7 @@ defmodule MarkoWeb.PageC do
 
   def handle_params(params, _uri, socket) do
     case fetch_tab(params) do
-      {:ok, tab} -> socket
+      {:ok, _tab} -> socket
       {:redirect, tab} -> redirect(socket, to: "/page_c/#{tab}")
     end
     |> (fn socket -> {:noreply, socket} end).()
@@ -51,13 +51,10 @@ defmodule MarkoWeb.PageC do
 
   defp make_tabs_list(selected_tab) do
     Enum.map(@allowed_tabs, fn tab ->
-      {
-        tab,
-        %{
-          active: tab == selected_tab,
-          path: tab_path(tab),
-          text: tab_text(tab)
-        }
+      %{
+        active: tab == selected_tab,
+        path: tab_path(tab),
+        text: tab_text(tab)
       }
     end)
   end
