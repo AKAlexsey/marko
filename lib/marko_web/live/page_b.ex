@@ -4,6 +4,7 @@ defmodule MarkoWeb.PageB do
   use Phoenix.LiveView
 
   alias Marko.Components.Navigation
+  alias MarkoWeb.LiveSessionCallbacks.TrackPagesVisited
 
   @navigation_configuration [
     {"Page A", "/page_a"},
@@ -12,5 +13,13 @@ defmodule MarkoWeb.PageB do
 
   def mount(_params, _session, socket) do
     {:ok, assign(socket, :navigation_configuration, @navigation_configuration)}
+  end
+
+  def handle_params(_params, uri, socket) do
+    {:noreply, TrackPagesVisited.assign_page_path(socket, uri)}
+  end
+
+  def terminate(_reason, socket) do
+    TrackPagesVisited.on_terminate(socket)
   end
 end

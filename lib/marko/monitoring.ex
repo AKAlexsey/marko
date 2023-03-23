@@ -8,7 +8,8 @@ defmodule Marko.Monitoring do
 
   alias Marko.Monitoring.{Session, SessionTrackingWorker}
 
-  defdelegate track_user_activity(session_id, view, seconds_spent, metadata), to: SessionTrackingWorker
+  defdelegate track_user_activity(session_id, path, seconds_spent, metadata),
+    to: SessionTrackingWorker
 
   @doc """
   Returns the list of sessions.

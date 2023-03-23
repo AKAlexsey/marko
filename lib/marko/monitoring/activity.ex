@@ -4,12 +4,12 @@ defmodule Marko.Monitoring.Activity do
 
   alias Marko.Monitoring.Session
 
-  @attrs ~w(view metadata session_id seconds_spent)a
-  @required_attrs ~w(view session_id seconds_spent)a
+  @attrs ~w(path metadata session_id seconds_spent)a
+  @required_attrs ~w(path session_id seconds_spent)a
 
   schema "activities" do
     belongs_to(:session, Session)
-    field :view, :string
+    field :path, :string
     field :seconds_spent, :integer, default: 0
     field :metadata, :map, default: %{}
 

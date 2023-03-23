@@ -8,6 +8,8 @@ defmodule Marko.Monitoring.Session do
   schema "sessions" do
     field :public_hash_id, :string
 
+    has_many(:activities, Marko.Monitoring.Activity, on_delete: :delete_all)
+
     timestamps()
   end
 

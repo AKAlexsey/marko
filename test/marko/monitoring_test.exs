@@ -62,7 +62,7 @@ defmodule Marko.MonitoringTest do
 
     import Marko.MonitoringFixtures
 
-    @invalid_attrs %{metadata: nil, view: nil, seconds_spent: nil}
+    @invalid_attrs %{metadata: nil, path: nil, seconds_spent: nil}
 
     test "list_activities/0 returns all activities" do
       activity = activity_fixture()
@@ -76,11 +76,11 @@ defmodule Marko.MonitoringTest do
 
     test "create_activity/1 with valid data creates a activity" do
       session = sessions_fixture()
-      valid_attrs = %{metadata: %{}, view: "some view", seconds_spent: 1, session_id: session.id}
+      valid_attrs = %{metadata: %{}, path: "some path", seconds_spent: 1, session_id: session.id}
 
       assert {:ok, %Activity{} = activity} = Monitoring.create_activity(valid_attrs)
       assert activity.metadata == %{}
-      assert activity.view == "some view"
+      assert activity.path == "some path"
     end
 
     test "create_activity/1 with invalid data returns error changeset" do
@@ -89,11 +89,11 @@ defmodule Marko.MonitoringTest do
 
     test "update_activity/2 with valid data updates the activity" do
       activity = activity_fixture()
-      update_attrs = %{metadata: %{}, view: "some updated view", seconds_spent: 1}
+      update_attrs = %{metadata: %{}, path: "some updated path", seconds_spent: 1}
 
       assert {:ok, %Activity{} = activity} = Monitoring.update_activity(activity, update_attrs)
       assert activity.metadata == %{}
-      assert activity.view == "some updated view"
+      assert activity.path == "some updated path"
     end
 
     test "update_activity/2 with invalid data returns error changeset" do

@@ -28,11 +28,12 @@ defmodule MarkoWeb.Router do
     resources "/sessions", SessionController
     resources "/activities", ActivityController, only: [:index, :show, :delete]
 
-
     live_session :activity_tracking,
-                 layout: {MarkoWeb.Layouts, :pages_layout},
-                 on_mount: MarkoWeb.LiveSessionCallbacks.TrackPagesVisited do
+      layout: {MarkoWeb.Layouts, :pages_layout},
+      on_mount: {MarkoWeb.LiveSessionCallbacks.TrackPagesVisited, :activity_tracking} do
       scope "/" do
+        pipe_through [:activity_tracking]
+
         live "/page_a", PageA
         live "/page_b", PageB
         live "/page_c", PageC
@@ -40,19 +41,6 @@ defmodule MarkoWeb.Router do
       end
     end
   end
-
-#  scope "/", MarkoWeb do
-#    pipe_through [:browser, :activity_tracking]
-#
-#    live_session :activity_tracking,
-#      layout: {MarkoWeb.Layouts, :pages_layout},
-#      on_mount: MarkoWeb.LiveSessionCallbacks.TrackPagesVisited do
-#      live "/page_a", PageA
-#      live "/page_b", PageB
-#      live "/page_c", PageC
-#      live "/page_c/:tab", PageC
-#    end
-#  end
 
   if Application.compile_env(:marko, :dev_routes) do
     import Phoenix.LiveDashboard.Router

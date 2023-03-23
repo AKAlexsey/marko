@@ -3,12 +3,17 @@ defmodule Marko.Monitoring.SessionTrackingWorker do
   Creates session asynchronously
   """
 
+  require Logger
+
   use GenServer
 
   alias Marko.Monitoring
 
-  def track_user_activity(session_id, view, seconds_spent, metadata \\ %{}) do
-    GenServer.cast({:track_user_activity, {session_id, view, seconds_spent, metadata}}, __MODULE__)
+  def track_user_activity(session_id, path, seconds_spent, metadata \\ %{}) do
+    GenServer.cast(
+      __MODULE__,
+      {:track_user_activity, {session_id, path, seconds_spent, metadata}}
+    )
   end
 
   def start_link(_) do
@@ -17,9 +22,21 @@ defmodule Marko.Monitoring.SessionTrackingWorker do
 
   def init(_), do: {:ok, %{}}
 
-  def handle_cast({:track_user_activity, {session_id, view, seconds_spent, metadata}}, state) do
-    IO.puts("!!! {:create_activity, #{inspect({session_id, view, seconds_spent, metadata})}}")
-    # Monitoring.create_activity(%{session_id: session_id, seconds_spent: seconds_spent, metadata: metadata, view: view})
+  def handle_cast({:track_user_activity, {session_id, path, seconds_spent, metadata}}, state) do
+    case Monitoring.create_activity(%{
+           session_id: session_id,
+           seconds_spent: seconds_spent,
+           metadata: metadata,
+           path: path
+         }) do
+      {:ok, _} ->
+        :ok
+
+      {:error, error_changeset} ->
+        Logger.error(fn ->
+          "#{__MODULE__} error activity creation for session #{session_id}. Reason: #{inspect(error_changeset)}"
+        end)
+    end
 
     {:noreply, state}
   end

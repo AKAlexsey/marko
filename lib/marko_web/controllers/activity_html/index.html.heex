@@ -8,13 +8,13 @@
 </.header>
 
 <.table id="activities" rows={@activities} row_click={&JS.navigate(~p"/activities/#{&1}")}>
-  <:col :let={activity} label="View name"><%= activity.view %></:col>
+  <:col :let={activity} label="Path"><%= activity.path %></:col>
   <:col :let={activity} label="Session">
-    <%= activity.view %>
     <.link href={~p"/sessions/#{activity.session_id}"}>
       <%= activity.session.public_hash_id %>
     </.link>
   </:col>
+  <:col :let={activity} label="Time spend (seconds)"><%= activity.seconds_spent %></:col>
   <:col :let={activity} label="Metadata"><%= inspect(activity.metadata, pretty: true) %></:col>
   <:action :let={activity}>
     <div class="sr-only">

@@ -4,6 +4,7 @@ defmodule MarkoWeb.PageC do
   use Phoenix.LiveView
 
   alias Marko.Components.Navigation
+  alias MarkoWeb.LiveSessionCallbacks.TrackPagesVisited
 
   @tab_1 "tab_1"
   @tab_2 "tab_2"
@@ -18,11 +19,12 @@ defmodule MarkoWeb.PageC do
     ]
   }
 
-  def handle_params(params, _uri, socket) do
+  def handle_params(params, uri, socket) do
     case fetch_tab(params) do
       {:ok, _tab} -> socket
       {:redirect, tab} -> redirect(socket, to: "/page_c/#{tab}")
     end
+    |> TrackPagesVisited.assign_page_path(uri)
     |> (fn socket -> {:noreply, socket} end).()
   end
 
@@ -65,5 +67,9 @@ defmodule MarkoWeb.PageC do
     tab
     |> String.capitalize()
     |> String.replace("_", " ")
+  end
+
+  def terminate(_reason, socket) do
+    TrackPagesVisited.on_terminate(socket)
   end
 end
