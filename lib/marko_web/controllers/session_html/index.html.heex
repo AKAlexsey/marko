@@ -1,0 +1,23 @@
+<.header>
+  Listing Session
+  <:actions>
+    <.link href={~p"/sessions/new"}>
+      <.button>New Session</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table id="sessions" rows={@sessions} row_click={&JS.navigate(~p"/sessions/#{&1}")}>
+  <:col :let={sessions} label="Public hash"><%= sessions.public_hash_id %></:col>
+  <:action :let={sessions}>
+    <div class="sr-only">
+      <.link navigate={~p"/sessions/#{sessions}"}>Show</.link>
+    </div>
+    <.link navigate={~p"/sessions/#{sessions}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={sessions}>
+    <.link href={~p"/sessions/#{sessions}"} method="delete" data-confirm="Are you sure?">
+      Delete
+    </.link>
+  </:action>
+</.table>

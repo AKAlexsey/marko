@@ -1,0 +1,15 @@
+<.header>
+  Session <%= @sessions.id %>
+  <:subtitle>This is a sessions record from your database.</:subtitle>
+  <:actions>
+    <.link href={~p"/sessions/#{@sessions}/edit"}>
+      <.button>Edit sessions</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Public hash"><%= @sessions.public_hash_id %></:item>
+</.list>
+
+<.back navigate={~p"/sessions"}>Back to sessions</.back>

@@ -68,4 +68,3 @@ What is a pageview?
 What is the engagement_time
 We are interested in how much time is spent on a page to understand the behaviour better.
 Track how many seconds the page content may be at least partially visible. This means that the page is in a foreground tab of a non-minimized window.
-

@@ -10,9 +10,10 @@ defmodule MarkoWeb.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :put_session_cookie do
+  pipeline :activity_tracking do
     plug(:fetch_cookies, signed: ~w(user_session))
-    plug(MarkoWeb.Plugs.PutSessionCookie)
+    plug(MarkoWeb.Plugs.PutSession)
+    plug(MarkoWeb.Plugs.PutTrackingData)
   end
 
   pipeline :api do
@@ -20,12 +21,19 @@ defmodule MarkoWeb.Router do
   end
 
   scope "/", MarkoWeb do
-    pipe_through [:browser, :put_session_cookie]
+    pipe_through [:browser]
 
     get "/", MonitoringController, :home
 
+    resources "/sessions", SessionController
+  end
+
+  scope "/", MarkoWeb do
+    pipe_through [:browser, :activity_tracking]
+
     live_session :activity_tracking,
-      layout: {MarkoWeb.Layouts, :pages_layout} do
+      layout: {MarkoWeb.Layouts, :pages_layout},
+      on_mount: MarkoWeb.LiveSessionCallbacks.TrackPagesVisited do
       live "/page_a", PageA
       live "/page_b", PageB
       live "/page_c", PageC
