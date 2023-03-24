@@ -8,7 +8,7 @@ defmodule Marko.Monitoring do
 
   alias Marko.Monitoring.{Session, SessionTrackingWorker}
 
-  defdelegate track_user_activity(session_id, path, seconds_spent, metadata),
+  defdelegate track_user_activity(params),
     to: SessionTrackingWorker
 
   @doc """
@@ -137,18 +137,26 @@ defmodule Marko.Monitoring do
   end
 
   @doc """
-  Returns the list of activities.
-
-  ## Examples
-
-      iex> list_activities()
-      [%Activity{}, ...]
+  Returns the list of activities. For index page.
+  Ordered by inserted_at in descending order. Latest first.
 
   """
   def index_page_activities(preload \\ []) do
     from(a in Activity,
       order_by: [desc: :inserted_at],
       preload: ^preload
+    )
+    |> Repo.all()
+  end
+
+  @doc """
+  Returns activities for given session_id
+  Ordered by inserted_at in descending order. Latest first.
+  """
+  def get_activities_for_session(session_id) do
+    from(a in Activity,
+      where: [session_id: ^session_id],
+      order_by: [desc: :inserted_at]
     )
     |> Repo.all()
   end

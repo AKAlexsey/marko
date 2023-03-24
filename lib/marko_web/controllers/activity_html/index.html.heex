@@ -8,6 +8,7 @@
 </.header>
 
 <.table id="activities" rows={@activities} row_click={&JS.navigate(~p"/activities/#{&1}")}>
+  <:col :let={activity} label="View"><%= activity.view %></:col>
   <:col :let={activity} label="Path"><%= activity.path %></:col>
   <:col :let={activity} label="Session">
     <.link href={~p"/sessions/#{activity.session_id}"}>

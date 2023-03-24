@@ -26,7 +26,8 @@ defmodule Marko.MonitoringFixtures do
       attrs
       |> Enum.into(%{
         metadata: %{},
-        path: "some path",
+        path: "/page_x",
+        view: "PageX",
         seconds_spent: 1
       })
       |> Map.put_new(:session_id, Map.get(sessions_fixture(), :id))

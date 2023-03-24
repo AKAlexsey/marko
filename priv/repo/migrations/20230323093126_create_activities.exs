@@ -4,6 +4,7 @@ defmodule Marko.Repo.Migrations.CreateActivities do
   def change do
     create table(:activities) do
       add :path, :string
+      add :view, :string
       add :metadata, :map
       add :seconds_spent, :integer
       add :session_id, references(:sessions, on_delete: :nothing)

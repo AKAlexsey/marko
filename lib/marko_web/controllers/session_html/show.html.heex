@@ -1,11 +1,5 @@
 <.header>
   Session <%= @sessions.id %>
-  <:subtitle>This is a sessions record from your database.</:subtitle>
-  <:actions>
-    <.link href={~p"/sessions/#{@sessions}/edit"}>
-      <.button>Edit sessions</.button>
-    </.link>
-  </:actions>
 </.header>
 
 <.list>
@@ -13,3 +7,21 @@
 </.list>
 
 <.back navigate={~p"/sessions"}>Back to sessions</.back>
+
+<.table id="activities" rows={@activities} row_click={&JS.navigate(~p"/activities/#{&1}")}>
+  <:col :let={activity} label="View"><%= activity.view %></:col>
+  <:col :let={activity} label="Path"><%= activity.path %></:col>
+  <:col :let={activity} label="Time spend (seconds)"><%= activity.seconds_spent %></:col>
+  <:col :let={activity} label="Metadata"><%= inspect(activity.metadata, pretty: true) %></:col>
+  <:col :let={activity} label="Created"><%= display_datetime(activity.inserted_at) %></:col>
+  <:action :let={activity}>
+    <div class="sr-only">
+      <.link navigate={~p"/activities/#{activity}"}>Show</.link>
+    </div>
+  </:action>
+  <:action :let={activity}>
+    <.link href={~p"/activities/#{activity}"} method="delete" data-confirm="Are you sure?">
+      Delete
+    </.link>
+  </:action>
+</.table>

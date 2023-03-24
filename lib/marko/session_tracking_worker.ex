@@ -9,10 +9,10 @@ defmodule Marko.Monitoring.SessionTrackingWorker do
 
   alias Marko.Monitoring
 
-  def track_user_activity(session_id, path, seconds_spent, metadata \\ %{}) do
+  def track_user_activity(tracking_params) do
     GenServer.cast(
       __MODULE__,
-      {:track_user_activity, {session_id, path, seconds_spent, metadata}}
+      {:track_user_activity, tracking_params}
     )
   end
 
@@ -22,19 +22,14 @@ defmodule Marko.Monitoring.SessionTrackingWorker do
 
   def init(_), do: {:ok, %{}}
 
-  def handle_cast({:track_user_activity, {session_id, path, seconds_spent, metadata}}, state) do
-    case Monitoring.create_activity(%{
-           session_id: session_id,
-           seconds_spent: seconds_spent,
-           metadata: metadata,
-           path: path
-         }) do
+  def handle_cast({:track_user_activity, tracking_params}, state) do
+    case Monitoring.create_activity(tracking_params) do
       {:ok, _} ->
         :ok
 
       {:error, error_changeset} ->
         Logger.error(fn ->
-          "#{__MODULE__} error activity creation for session #{session_id}. Reason: #{inspect(error_changeset)}"
+          "#{__MODULE__} error activity creation for session #{inspect(tracking_params)}. Reason: #{inspect(error_changeset)}"
         end)
     end
 

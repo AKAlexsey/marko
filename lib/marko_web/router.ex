@@ -25,7 +25,7 @@ defmodule MarkoWeb.Router do
 
     get "/", MonitoringController, :home
 
-    resources "/sessions", SessionController
+    resources "/sessions", SessionController, only: [:index, :show, :delete]
     resources "/activities", ActivityController, only: [:index, :show, :delete]
 
     live_session :activity_tracking,

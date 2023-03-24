@@ -22,13 +22,20 @@ defmodule MarkoWeb.LiveSessionCallbacks.TrackPagesVisited do
     |> assign(:visit_started, NaiveDateTime.utc_now())
   end
 
-  def on_terminate(%{assigns: assigns} = socket) do
+  def on_terminate(%{view: view, assigns: assigns} = socket) do
     %{user_agent: user_agent, session_id: session_id, visit_started: visit_started, path: path} =
       assigns
 
     seconds_spent = NaiveDateTime.diff(NaiveDateTime.utc_now(), visit_started)
     metadata = %{user_agent: user_agent}
-    Monitoring.track_user_activity(session_id, path, seconds_spent, metadata)
+
+    Monitoring.track_user_activity(%{
+      view: "#{view}",
+      session_id: session_id,
+      path: path,
+      seconds_spent: seconds_spent,
+      metadata: metadata
+    })
 
     socket
   end

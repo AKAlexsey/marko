@@ -14,9 +14,10 @@
     </p>
     <p>
       <b>Activities</b> - represent one page visit. Belongs to session.
-      Contains information about visited page path, seconds spent and metadata.
+      Contains information about visited view, page path, seconds spent and metadata.
       Metadata currently contains only "user-agent" header. Potentially
-      can be extended and store any data, because it's JSONb field.
+      can be extended and store any data, because it's JSONb field. Path was added to
+      differentiate time spent on each of page C tabs.
     </p>
   </article>
 

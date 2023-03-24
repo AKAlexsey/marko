@@ -90,11 +90,20 @@ defmodule Marko.MonitoringTest do
 
     test "create_activity/1 with valid data creates a activity" do
       session = sessions_fixture()
-      valid_attrs = %{metadata: %{}, path: "some path", seconds_spent: 1, session_id: session.id}
+
+      valid_attrs = %{
+        metadata: %{},
+        path: "/page_x",
+        view: "PageX",
+        seconds_spent: 1,
+        session_id: session.id
+      }
 
       assert {:ok, %Activity{} = activity} = Monitoring.create_activity(valid_attrs)
       assert activity.metadata == %{}
-      assert activity.path == "some path"
+      assert activity.path == "/page_x"
+      assert activity.view == "PageX"
+      assert activity.seconds_spent == 1
     end
 
     test "create_activity/1 with invalid data returns error changeset" do
@@ -103,11 +112,12 @@ defmodule Marko.MonitoringTest do
 
     test "update_activity/2 with valid data updates the activity" do
       activity = activity_fixture()
-      update_attrs = %{metadata: %{}, path: "some updated path", seconds_spent: 1}
+      update_attrs = %{metadata: %{}, path: "/page_y", view: "ViewY", seconds_spent: 1}
 
       assert {:ok, %Activity{} = activity} = Monitoring.update_activity(activity, update_attrs)
       assert activity.metadata == %{}
-      assert activity.path == "some updated path"
+      assert activity.path == "/page_y"
+      assert activity.view == "ViewY"
     end
 
     test "update_activity/2 with invalid data returns error changeset" do

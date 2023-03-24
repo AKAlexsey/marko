@@ -3,11 +3,5 @@ defmodule MarkoWeb.SessionHTML do
 
   embed_templates "session_html/*"
 
-  @doc """
-  Renders a sessions form.
-  """
-  attr :changeset, Ecto.Changeset, required: true
-  attr :action, :string, required: true
-
-  def session_form(assigns)
+  defdelegate display_datetime(datetime), to: MarkoWeb.ActivityHTML
 end
