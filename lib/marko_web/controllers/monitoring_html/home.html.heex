@@ -1,4 +1,74 @@
-<.flash_group flash={@flash} />
-<div class="fixed inset-y-0 right-0 left-[40rem] hidden lg:block xl:left-[50rem] z-0">
-  <h1>Application created</h1>
-</div>
+<.header>
+  <h1 class="home_page_header">Welcome to Marco test exercise</h1>
+</.header>
+
+<section class="home_page_section">
+  <h1 class="title">Statistics pages</h1>
+  <article class="description">
+    <p>
+      These pages contains information about user sessions and tracked activities. Duplicated in the page layout navigation.
+    </p>
+    <p>
+      <b>Sessions</b> - created and written to the user cookie. According to security reasons -
+      each session has ID and public_hash_id.
+    </p>
+    <p>
+      <b>Activities</b> - represent one page visit. Belongs to session.
+      Contains information about visited page path, seconds spent and metadata.
+      Metadata currently contains only "user-agent" header. Potentially
+      can be extended and store any data, because it's JSONb field.
+    </p>
+  </article>
+
+  <article class="home_page_links">
+    <a
+      href={MarkoWeb.Router.Helpers.session_path(@conn, :index)}
+      class="rounded-lg bg-zinc-100 px-2 py-1 text-[0.8125rem] font-semibold leading-6 text-zinc-900 hover:bg-zinc-200/80 active:text-zinc-900/70"
+    >
+      Sessions
+    </a>
+    <a
+      href={activity_path(@conn, :index)}
+      class="rounded-lg bg-zinc-100 px-2 py-1 text-[0.8125rem] font-semibold leading-6 text-zinc-900 hover:bg-zinc-200/80 active:text-zinc-900/70"
+    >
+      Activities
+    </a>
+  </article>
+</section>
+
+<section class="home_page_section">
+  <h1 class="title">Exercise tracking pages</h1>
+  <article class="description">
+    <p>
+      These pages are intended to track.
+    </p>
+    <p>
+      Routing between happens through LiveView <b>live_session</b>.
+      That's why routing between sessions happens through WS. Without additional HTTP requests.
+    </p>
+    <p>
+      Seconds, spent on each page tracking and saving asynchronously to the database Activities table
+    </p>
+  </article>
+
+  <article class="home_page_links">
+    <a
+      href={live_path(@conn, MarkoWeb.PageA)}
+      class="rounded-lg bg-zinc-100 px-2 py-1 text-[0.8125rem] font-semibold leading-6 text-zinc-900 hover:bg-zinc-200/80 active:text-zinc-900/70"
+    >
+      Page A
+    </a>
+    <a
+      href={live_path(@conn, MarkoWeb.PageB)}
+      class="rounded-lg bg-zinc-100 px-2 py-1 text-[0.8125rem] font-semibold leading-6 text-zinc-900 hover:bg-zinc-200/80 active:text-zinc-900/70"
+    >
+      Page B
+    </a>
+    <a
+      href={live_path(@conn, MarkoWeb.PageC)}
+      class="rounded-lg bg-zinc-100 px-2 py-1 text-[0.8125rem] font-semibold leading-6 text-zinc-900 hover:bg-zinc-200/80 active:text-zinc-900/70"
+    >
+      Page C
+    </a>
+  </article>
+</section>

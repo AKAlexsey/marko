@@ -4,7 +4,7 @@ defmodule MarkoWeb.ActivityController do
   alias Marko.Monitoring
 
   def index(conn, _params) do
-    activities = Monitoring.list_activities([:session])
+    activities = Monitoring.index_page_activities([:session])
     render(conn, :index, activities: activities)
   end
 

@@ -29,7 +29,7 @@ Create 3 LiveView Controller (Pages), of which the last one (Page C) consists of
 
 **Content:**
 
-* Two Tabs (Tab 1 and Tab 2) realized as LiveComponent (!)
+* Two Tabs (Tab 1 and Tab 2) implemented as LiveComponent (!)
 * Tab 1 has a link to Page B, Tab 2 has a link to Page A.
 
 You should be able to switch between the tabs.

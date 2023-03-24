@@ -11,7 +11,7 @@ defmodule Marko.MonitoringFixtures do
     {:ok, sessions} =
       attrs
       |> Enum.into(%{
-        public_hash_id: "some public_hash_id"
+        public_hash_id: Ecto.UUID.generate()
       })
       |> Marko.Monitoring.create_sessions()
 
@@ -29,7 +29,7 @@ defmodule Marko.MonitoringFixtures do
         path: "some path",
         seconds_spent: 1
       })
-      |> Map.update(:session_id, Map.get(sessions_fixture(), :id), fn session_id -> session_id end)
+      |> Map.put_new(:session_id, Map.get(sessions_fixture(), :id))
       |> Marko.Monitoring.create_activity()
 
     activity

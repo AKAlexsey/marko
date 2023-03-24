@@ -16,6 +16,7 @@
   </:col>
   <:col :let={activity} label="Time spend (seconds)"><%= activity.seconds_spent %></:col>
   <:col :let={activity} label="Metadata"><%= inspect(activity.metadata, pretty: true) %></:col>
+  <:col :let={activity} label="Created"><%= display_datetime(activity.inserted_at) %></:col>
   <:action :let={activity}>
     <div class="sr-only">
       <.link navigate={~p"/activities/#{activity}"}>Show</.link>

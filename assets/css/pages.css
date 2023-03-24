@@ -1,11 +1,16 @@
+:root {
+    --cards-color: lightblue;
+    --tabs-border-color: darkblue;
+}
+
 #pages_layout {
     width: fit-content;
     margin-left: auto;
     margin-right: auto;
     margin-top: 20px;
-    background-color: lightblue;
+    background-color: var(--cards-color);
     border-radius: 3px;
-    padding: 10px 10px 10px 10px;
+    padding: 10px;
 }
 
 .page_header {
@@ -59,19 +64,49 @@
 }
 
 .navigation_tabs .tabs_switch .tab.active {
-    border-top: 3px darkblue solid;
-    border-left: 3px darkblue solid;
-    border-right: 3px darkblue solid;
-    border-bottom: 3px lightblue solid;
+    border-left: 3px var(--tabs-border-color) solid;
+    border-top: 3px var(--tabs-border-color) solid;
+    border-right: 3px var(--tabs-border-color) solid;
+    border-bottom: 3px var(--cards-color) solid;
     margin-bottom: -3px;
     border-radius: 3px;
 }
 
 .navigation_tabs .tabs_content {
-    border: 3px darkblue solid;
+    border: 3px var(--tabs-border-color) solid;
     border-radius: 3px;
     padding-left: 6px;
     padding-right: 6px;
     border-radius: 3px;
+}
+
+.home_page_header {
+    font-size: 24px;
+}
+
+.home_page_section {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    background-color: var(--cards-color);
+    border-radius: 3px;
+    padding: 12px;
+}
+
+.home_page_section .title {
+    font-size: 20px;
+}
+
+.home_page_section .description p {
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.home_page_section .home_page_links {
+    display: flex;
+}
+
+.home_page_section .home_page_links a {
+    margin-left: 5px;
+    margin-right: 5px;
 }
 

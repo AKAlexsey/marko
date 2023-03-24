@@ -64,9 +64,23 @@ defmodule Marko.MonitoringTest do
 
     @invalid_attrs %{metadata: nil, path: nil, seconds_spent: nil}
 
-    test "list_activities/0 returns all activities" do
+    test "list_activities/1 returns all activities" do
       activity = activity_fixture()
       assert Monitoring.list_activities() == [activity]
+    end
+
+    test "index_page_activities/1 returns all ordered in descendant inserted at order. Preloads specified relations." do
+      %{id: session_id} = sessions_fixture()
+      %{id: activity_1_id} = activity_fixture(%{session_id: session_id})
+      %{id: activity_2_id} = activity_fixture(%{session_id: session_id})
+      %{id: activity_3_id} = activity_fixture(%{session_id: session_id})
+      activities = Monitoring.index_page_activities([:session])
+
+      assert [
+               %{id: ^activity_1_id, session: %{id: ^session_id}},
+               %{id: ^activity_2_id, session: %{id: ^session_id}},
+               %{id: ^activity_3_id, session: %{id: ^session_id}}
+             ] = activities
     end
 
     test "get_activity!/1 returns the activity with given id" do

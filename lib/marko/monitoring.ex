@@ -137,6 +137,23 @@ defmodule Marko.Monitoring do
   end
 
   @doc """
+  Returns the list of activities.
+
+  ## Examples
+
+      iex> list_activities()
+      [%Activity{}, ...]
+
+  """
+  def index_page_activities(preload \\ []) do
+    from(a in Activity,
+      order_by: [desc: :inserted_at],
+      preload: ^preload
+    )
+    |> Repo.all()
+  end
+
+  @doc """
   Gets a single activity.
 
   Raises `Ecto.NoResultsError` if the Activity does not exist.
