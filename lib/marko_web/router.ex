@@ -30,7 +30,8 @@ defmodule MarkoWeb.Router do
 
     live_session :activity_tracking,
       layout: {MarkoWeb.Layouts, :pages_layout},
-      on_mount: {MarkoWeb.LiveSessionCallbacks.TrackPagesVisited, :activity_tracking} do
+      on_mount: {MarkoWeb.LiveSessionCallbacks.TrackPagesVisited, :activity_tracking},
+      root_layout: false do
       scope "/" do
         pipe_through [:activity_tracking]
 

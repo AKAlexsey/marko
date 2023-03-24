@@ -3,6 +3,10 @@
     --tabs-border-color: darkblue;
 }
 
+#visibility_form {
+    display: none;
+}
+
 #pages_layout {
     width: fit-content;
     margin-left: auto;

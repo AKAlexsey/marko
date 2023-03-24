@@ -39,3 +39,14 @@ liveSocket.connect()
 // >> liveSocket.disableLatencySim()
 window.liveSocket = liveSocket
 
+if (document.getElementById('pages_layout')) {
+    console.log('adding callback')
+    window.addEventListener('visibilitychange', (event) => {
+        document.getElementById('visibility_state').value = document.visibilityState;
+
+        document.getElementById("visibility_form").dispatchEvent(
+            new Event("submit", {bubbles: true, cancelable: true})
+        )
+    })
+}
+

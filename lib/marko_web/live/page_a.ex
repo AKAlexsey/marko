@@ -22,4 +22,8 @@ defmodule MarkoWeb.PageA do
   def terminate(_reason, socket) do
     TrackPagesVisited.on_terminate(socket)
   end
+
+  def handle_event("visibility_changed", params, socket) do
+    TrackPagesVisited.visibility_changed(socket, params)
+  end
 end

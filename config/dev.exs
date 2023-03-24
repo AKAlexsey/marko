@@ -1,5 +1,7 @@
 import Config
 
+config :logger, level: :info
+
 config :marko, Marko.Repo,
   username: "postgres",
   password: "postgres",
