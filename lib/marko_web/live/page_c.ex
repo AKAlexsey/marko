@@ -4,7 +4,7 @@ defmodule MarkoWeb.PageC do
   use Phoenix.LiveView
 
   alias Marko.Components.Navigation
-  alias MarkoWeb.LiveSessionCallbacks.TrackPagesVisited
+  alias MarkoWeb.Tracking.TrackPagesVisited
 
   @tab_1 "tab_1"
   @tab_2 "tab_2"
