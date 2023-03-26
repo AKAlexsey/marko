@@ -2,11 +2,10 @@ defmodule Marko.MonitoringTest do
   use Marko.DataCase
 
   alias Marko.Monitoring
+  import Marko.MonitoringFixtures
 
   describe "sessions" do
     alias Marko.Monitoring.Session
-
-    import Marko.MonitoringFixtures
 
     @invalid_attrs %{public_hash_id: nil}
 
@@ -59,8 +58,6 @@ defmodule Marko.MonitoringTest do
 
   describe "activities" do
     alias Marko.Monitoring.Activity
-
-    import Marko.MonitoringFixtures
 
     @invalid_attrs %{metadata: nil, path: nil, seconds_spent: nil}
 

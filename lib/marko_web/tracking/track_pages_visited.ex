@@ -50,8 +50,11 @@ defmodule MarkoWeb.Tracking.TrackPagesVisited do
 
   If visibility state changed - calculates time page visible or saves visit datetime.
   """
-
-  def visibility_changed(%{assigns: assigns} = socket, %{"visibility" => current_visibility}) do
+  def visibility_changed(
+        %{assigns: assigns} = socket,
+        %{"visibility" => current_visibility},
+        current_datetime \\ nil
+      ) do
     %{visibility: past_visibility} = assigns
 
     new_socket =
@@ -60,12 +63,15 @@ defmodule MarkoWeb.Tracking.TrackPagesVisited do
           socket
 
         @page_visible ->
-          assign(socket, :visit_started, now())
+          assign(socket, :visit_started, current_datetime || now())
 
         @page_hidden ->
           socket
           |> assign(:visit_started, nil)
-          |> assign(:milliseconds_spent, calculate_total_milliseconds_spend(assigns))
+          |> assign(
+            :milliseconds_spent,
+            calculate_total_milliseconds_spend(assigns, current_datetime)
+          )
       end
       |> assign(:visibility, current_visibility)
 
@@ -79,17 +85,17 @@ defmodule MarkoWeb.Tracking.TrackPagesVisited do
 
   Saves time spent and user session data to the database.
   """
-  def on_terminate(%{view: view, assigns: assigns} = socket) do
+  def on_terminate(%{view: view, assigns: assigns} = socket, current_datetime \\ nil) do
     %{user_agent: user_agent, session_id: session_id, path: path} = assigns
 
     Monitoring.track_user_activity(%{
       view: "#{view}",
       session_id: session_id,
       path: path,
-      seconds_spent: Kernel.trunc(calculate_total_milliseconds_spend(assigns) / 1000),
+      seconds_spent:
+        Kernel.trunc(calculate_total_milliseconds_spend(assigns, current_datetime) / 1000),
       metadata: %{user_agent: user_agent}
     })
-    |> IO.inspect()
 
     socket
   end
@@ -113,10 +119,29 @@ defmodule MarkoWeb.Tracking.TrackPagesVisited do
 
   Current precision is millisecond.
   It's mean that we are able to track sessions precisely with precision 1 s.
+
+  Second argument using in tests.
   """
-  def calculate_total_milliseconds_spend(%{visit_started: visit_started, milliseconds_spent: milliseconds_spent}) do
-    milliseconds_spent + NaiveDateTime.diff(now(), visit_started, @time_calculation_precision)
+  def calculate_total_milliseconds_spend(_socket, current_datetime \\ nil)
+
+  def calculate_total_milliseconds_spend(
+        %{
+          visit_started: %NaiveDateTime{} = visit_started,
+          milliseconds_spent: milliseconds_spent
+        },
+        current_datetime
+      ) do
+    current_visit_duration =
+      NaiveDateTime.diff(current_datetime || now(), visit_started, @time_calculation_precision)
+
+    milliseconds_spent + current_visit_duration
   end
+
+  def calculate_total_milliseconds_spend(
+        %{milliseconds_spent: milliseconds_spent},
+        _current_datetime
+      ),
+      do: milliseconds_spent
 
   defp now(), do: NaiveDateTime.utc_now()
 end

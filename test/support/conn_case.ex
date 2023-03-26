@@ -19,15 +19,14 @@ defmodule MarkoWeb.ConnCase do
 
   using do
     quote do
-      # The default endpoint for testing
       @endpoint MarkoWeb.Endpoint
 
       use MarkoWeb, :verified_routes
 
-      # Import conveniences for testing with connections
       import Plug.Conn
       import Phoenix.ConnTest
       import MarkoWeb.ConnCase
+      import Phoenix.Component
     end
   end
 

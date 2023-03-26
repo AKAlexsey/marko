@@ -12,6 +12,10 @@ defmodule MarkoWeb.Plugs.PutSession do
   alias Marko.Monitoring
 
   @doc false
+  @spec session_cookie_name() :: String.t()
+  def session_cookie_name(), do: @session_cookie_name
+
+  @doc false
   @spec init(Plug.opts()) :: Plug.opts()
   def init(options), do: options
 
